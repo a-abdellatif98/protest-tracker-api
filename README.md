@@ -6,23 +6,20 @@ API for Resistance Calendar events
 
 # Getting Started
 
-## Prerequisites
-
-* [MongoDB](https://www.mongodb.com) from the [downloads page](https://www.mongodb.com/download-center?jmp=nav#community)
-* [Node Package Manager](https://www.npmjs.com)
+See setup documentation at /doc/dev_setup.md.
 
 ## Demo
 
 An instance of the application is running at the following location:
 
-https://resistance-calendar.herokuapp.com/v1/events
+https://protest-tracker-api-stg.herokuapp.com/v1/events
 
 ### Endpoints
 
 All endpoints try to be compliant with the [OSDI Events](https://opensupporter.github.io/osdi-docs/events.html) standard which exposes two high level endpoints and a few options for paging:
-* https://resistance-calendar.herokuapp.com/v1/events
-* https://resistance-calendar.herokuapp.com/v1/events/{:id}
-* https://resistance-calendar.herokuapp.com/v1/events?page=0&per_page=25
+* https://protest-tracker-api-stg.herokuapp.com/v1/events
+* https://protest-tracker-api-stg.herokuapp.com/v1/events/{:id}
+* https://protest-tracker-api-stg.herokuapp.com/v1/events?page=0&per_page=25
 
 ### Queries
 
@@ -86,13 +83,13 @@ mkdir .db
 mongod --dbpath .db/
 
 # Always a good idea to install packages
-npm install && npm install semistandard -g
+yarn install && yarn install semistandard -g
 
 # Run the tests!
-npm test
+yarn test
 
 # Run the service
-npm start
+yarn start
 ```
 
 # Technical Architecture

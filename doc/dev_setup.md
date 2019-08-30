@@ -1,13 +1,15 @@
 # Protest Tracker API - Dev Setup
 
-1. Clone repo from Github to your machine. `git clone git@github.com:sosamerica2019/protest-tracker-api.git`
+1. Clone repo from Github to your machine: `git clone git@github.com:sosamerica2019/protest-tracker-api.git`
 1. `cd protest-tracker-api`
 1. Install required node version (from /.node-version) or install [nodenv][1] and run `nodenv install`.
+1. Install [mongodb][1a]
 1. Install [yarn package manager][2]
 1. Install dependencies: `yarn install`
 1. Install semistandard linter: `yarn install semistandard -g`
 
 [1]: https://github.com/nodenv/nodenv#installation
+[1a]: https://www.mongodb.com/download-center
 [2]: https://yarnpkg.com/en/docs/install
 
 ## Deployment setup
