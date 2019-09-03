@@ -9,9 +9,6 @@
     "AWS_SECRET_ACCESS_KEY": {
       "required": true
     },
-    "CLOUDINARY_URL": {
-      "required": true
-    },
     "FB_GRAPH_API_TOKEN": {
       "required": true
     },
@@ -28,7 +25,6 @@
   "formation": {
   },
   "addons": [
-    "cloudinary",
     "mongolab",
     "papertrail"
   ],
