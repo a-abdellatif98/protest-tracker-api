@@ -1,5 +1,4 @@
 'use strict';
-require('dotenv').config();
 const config = require('./config');
 const Hapi = require('hapi');
 const corsHeaders = require('hapi-cors-headers');
