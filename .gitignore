@@ -52,3 +52,5 @@ test.sh
 
 # Mac stuff
 .DS_Store
+
+.env

@@ -7,6 +7,7 @@
 1. Install [yarn package manager][2]
 1. Install dependencies: `yarn install`
 1. Install semistandard linter: `yarn install semistandard -g`
+1. Create your `.env` file: `cp .env.example .env`. Customize as necessary.
 
 [1]: https://github.com/nodenv/nodenv#installation
 [1a]: https://www.mongodb.com/download-center
