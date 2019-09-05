@@ -84,9 +84,9 @@ lab.test('Facebook.importFacebookCsv', (done) => {
   Facebook.importFacebookCsv('resource/fb_test.csv', function (err, rows) {
     if (err) Code.fail(err);
 
-    const rowsWithoutLocation = rows.filter((row) => { return !row.location || !row.location.location; });
-    console.log(rowsWithoutLocation.length);
-    console.log(rows.length);
+    // const rowsWithoutLocation = rows.filter((row) => { return !row.location || !row.location.location; });
+    // console.log(rowsWithoutLocation.length);
+    // console.log(rows.length);
 
     Code.expect(rows.length).to.equal(1);
     const event = rows[0];
