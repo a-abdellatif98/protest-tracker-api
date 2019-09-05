@@ -1,3 +1,4 @@
+const bluebird = require('bluebird');
 const mongoose = require('mongoose');
 const mockgoose = require('mockgoose');
 
@@ -10,7 +11,8 @@ mockgoose(mongoose);
 
 // Create the mongoose connection on init
 lab.before(function (done) {
-  mongoose.connect('mongodb://example.com/TestingDB', done);
+  mongoose.Promise = bluebird;
+  mongoose.connect('mongodb://example.com/TestingDB', { useMongoClient: true }, done);
 });
 
 // Close the fake connection after all tests are done

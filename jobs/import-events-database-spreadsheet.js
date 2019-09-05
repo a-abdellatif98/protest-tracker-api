@@ -1,8 +1,7 @@
-// const Event = require('../models/osdi/event');
 const csvParse = require('csv-parse/lib/sync');
 const fetch = require('node-fetch');
-
-require('../lib/database'); // Has side effect of connecting to database
+const db = require('../lib/database'); // Has side effect of connecting to database
+// const Event = require('../models/osdi/event');
 
 const importEvents = async function () {
   const csvFile = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRRk9VzF_6cp_W3zcE_HkBBa5IpiHDLJk9Xx5J1y7OQ_pR_nZMjfuSZYgN4PhlNJNCF9EN-zdjpARtg/pub?gid=393144295&single=true&output=csv';
@@ -16,3 +15,4 @@ const importEvents = async function () {
 };
 
 importEvents();
+db.disconnect();
