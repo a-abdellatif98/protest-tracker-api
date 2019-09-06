@@ -10,10 +10,13 @@ const importEvents = async function () {
   console.debug(`Loading ${csvFile}`);
 
   let eventData = await fetchAndParse(csvFile);
+  console.log(`Found ${eventData.length} event data rows`);
+
   eventData = eventData.filter(eventApproved);
   console.log(`Found ${eventData.length} approved events`);
+
   eventData = ensureUniqueNames(eventData);
-  console.log(`Found ${eventData.length} with unique names`);
+  console.log(`Found ${eventData.length} events with unique names`);
 
   //   .each(upsertEvent);
 };
@@ -70,8 +73,6 @@ const fetchAndParse = async function(csvFile) {
 
   const colHeadings = rows[0].filter(heading => heading.length > 0);
   events = rows.slice(1);
-
-  console.info(`Found ${events.length} events`);
 
   if (colHeadings.length !== columns.length) {
     throw(`ERROR: Expected ${columns.length} columns, but found ${colHeadings.length}.`);
