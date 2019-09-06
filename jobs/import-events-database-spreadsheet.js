@@ -93,6 +93,10 @@ const eventToOSDI = function(evt) {
       startDate = new Date(evt.single_start_time);
     }
     const identifier = `${originSystem}:${evt.unique_name}:${dateStr}`;
+
+    // TODO: Figure out if we need zip codes
+    // TODO: Geocode addresses (maybe use geo.js)
+    // TODO: Figure out if timezones are an issue. I suspect they are not.
     return new Event({
       identifiers: [identifier],
       origin_system: originSystem,
