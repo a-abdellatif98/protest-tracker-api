@@ -1,4 +1,5 @@
 const db = require('../lib/database'); // Has side effect of connecting to database
+const geo = require('../lib/geo');
 const fetchCSV = require('../lib/fetchCSV');
 const getRepeatingDates = require('../lib/repeatingEvent').getDates;
 const Event = require('../models/osdi/event');
@@ -84,6 +85,22 @@ const eventToOSDI = async function(evt) {
       console.error(`ERROR: Invalid value for evt.repeating_or_single ${evt.repeating_or_single}`);
   }
 
+  const fullAddrStr = `${evt.adddress}, ${evt.city}, ${evt.state}`;
+  const geoAddr = (await geo.addressToGeocodedLocation(fullAddrStr))[0];
+  const location = {
+    venue: evt.location_name,
+    address_lines: [ evt.address ],
+    locality: evt.city,
+    region: evt.state,
+    postal_code: geoAddr.zipcode,
+    country: geoAddr.countryCode,
+    location: {
+      latitude: geoAddr.latitude,
+      longitude: geoAddr.longitude
+    },
+    public: true
+  };
+
   return dates.map(date => {
     const dateStr = date.toISOString().replace(/T.*$/, '');
     let startDate, endDate;
@@ -98,8 +115,6 @@ const eventToOSDI = async function(evt) {
     }
     const identifier = `${originSystem}:${evt.unique_name}:${dateStr}`;
 
-    // TODO: Figure out if we need zip codes
-    // TODO: Geocode addresses (maybe use geo.js)
     // TODO: Figure out if timezones are an issue. I suspect they are not.
     return new Event({
       identifiers: [identifier],
@@ -115,11 +130,7 @@ const eventToOSDI = async function(evt) {
       end_date: endDate,
       transparence: 'transparent',
       visibility: 'public',
-      location: {
-        address_lines: [evt.address],
-        locality: evt.city,
-        region: evt.state
-      }
+      location: location
     });
   });
 };

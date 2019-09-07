@@ -39,6 +39,7 @@
     "mongodb": "^2.2.25",
     "mongoose": "^4.8.6",
     "node-fetch": "^2.6.0",
+    "node-geocoder": "^3.24.0",
     "odata-v4-mongodb": "0.1.11",
     "parse-address-string": "0.0.3",
     "request": "^2.81.0",
