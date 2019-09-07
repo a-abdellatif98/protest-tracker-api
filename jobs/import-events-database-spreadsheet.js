@@ -48,12 +48,12 @@ const importEvents = async function () {
 
   const nestedOSDIEvents = await Promise.all(eventData.map(eventToOSDI));
   // Each "nested" event is an array of events. Flatten them.
-  const osdiEvents = nestedOSDIEvents.reduce((e,a) => a.concat(e), []);
+  const osdiEvents = nestedOSDIEvents.reduce((e, a) => a.concat(e), []);
 
   osdiEvents.forEach(upsertEvent);
 };
 
-const ensureUniqueNames = function(events) {
+const ensureUniqueNames = function (events) {
   let uniqueNames = [];
 
   return events.filter((evt) => {
@@ -68,7 +68,7 @@ const ensureUniqueNames = function(events) {
 
 const eventApproved = (evt) => evt.approved === 'Yes';
 
-const eventToOSDI = async function(evt) {
+const eventToOSDI = async function (evt) {
   const originSystem = 'pt_evt_db_ss';
   let dates, repeating;
   switch (evt.repeating_or_single) {
@@ -78,8 +78,8 @@ const eventToOSDI = async function(evt) {
       break;
     case 'Repeating':
       repeating = true;
-      const days_of_week = evt.repeating_days_of_week.split(',').map(day => day.trim());
-      dates = getRepeatingDates(days_of_week);
+      const daysOfWeek = evt.repeating_days_of_week.split(',').map(day => day.trim());
+      dates = getRepeatingDates(daysOfWeek);
       break;
     default:
       console.error(`ERROR: Invalid value for evt.repeating_or_single ${evt.repeating_or_single}`);
@@ -135,10 +135,10 @@ const eventToOSDI = async function(evt) {
   });
 };
 
-const upsertEvent = function(osdiEvent) {
+const upsertEvent = function (osdiEvent) {
   const query = { identifiers: { $in: [osdiEvent.identifiers[0]] } };
   Event.upsert(query, osdiEvent, function (err, doc) {
-    if (err) { return console.error(`ERROR upserting: ${err}`) };
+    if (err) { return console.error(`ERROR upserting: ${err}`); }
     console.log(`Successfully upserted ${doc.title}`);
   });
 };
