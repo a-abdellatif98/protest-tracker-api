@@ -45,8 +45,9 @@ const importEvents = async function () {
   eventData = ensureUniqueNames(eventData);
   console.log(`Found ${eventData.length} events with unique names`);
 
-  // One record may become many, so collect and flatten them/
-  const osdiEvents = eventData.map(eventToOSDI).reduce((e,a) => a.concat(e), []);
+  const nestedOSDIEvents = await Promise.all(eventData.map(eventToOSDI));
+  // Each "nested" event is an array of events. Flatten them.
+  const osdiEvents = nestedOSDIEvents.reduce((e,a) => a.concat(e), []);
 
   osdiEvents.forEach(upsertEvent);
 };
@@ -66,7 +67,7 @@ const ensureUniqueNames = function(events) {
 
 const eventApproved = (evt) => evt.approved === 'Yes';
 
-const eventToOSDI = function(evt) {
+const eventToOSDI = async function(evt) {
   const originSystem = 'pt_evt_db_ss';
   let dates, repeating;
   switch (evt.repeating_or_single) {
