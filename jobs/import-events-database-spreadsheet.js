@@ -20,9 +20,8 @@ const importEvents = async function () {
 
   // One record may become many, so collect and flatten them/
   const osdiEvents = eventData.map(eventToOSDI).reduce((e,a) => a.concat(e), []);
-  console.debug(osdiEvents);
 
-  // osdiEvents.forEach(upsertEvent);
+  osdiEvents.forEach(upsertEvent);
 };
 
 const columns = [
@@ -86,11 +85,15 @@ const eventToOSDI = function(evt) {
 
   return dates.map(date => {
     const dateStr = date.toISOString().replace(/T.*$/, '');
-    let startDate;
+    let startDate, endDate;
     if (repeating) {
-      startDate = new Date(`${dateStr}T${evt.repeating_start_time}`);
+      startDate = new Date(`${dateStr} ${evt.repeating_start_time} UTC`);
+      if (evt.repeating_end_time.length) {
+        endDate = new Date(`${dateStr} ${evt.repeating_end_time} UTC`);
+      }
     } else {
       startDate = new Date(evt.single_start_time);
+      endDate = new Date(evt.single_end_time);
     }
     const identifier = `${originSystem}:${evt.unique_name}:${dateStr}`;
 
@@ -107,21 +110,15 @@ const eventToOSDI = function(evt) {
       browser_url: evt.event_url,
       type: 'open',
       status: 'confirmed',
-      start_date: startDate
-      // end_date: facebookEvent.end_time ? new Date(facebookEvent.end_time) : undefined,
-      // all_day_date
-      // all_day
-      // capacity
-      // guests_can_invite_others: facebookEvent.can_guests_invite,
-      // transparence
-      // visibility
-      // location: evt.osdiLocation,
-      // reminders
-      // share_url
-      // total_shares
-      // share_options
-      // timezone: evt.timezone,
-      // contact: osdiContact
+      start_date: startDate,
+      end_date: endDate,
+      transparence: 'transparent',
+      visibility: 'public',
+      location: {
+        address_lines: [evt.address],
+        locality: evt.city,
+        region: evt.state
+      }
     });
   });
 };
