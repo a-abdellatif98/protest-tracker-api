@@ -108,13 +108,15 @@ const eventToOSDI = async function (evt) {
     const dateStr = date.toISOString().replace(/T.*$/, '');
     let startDate, endDate;
     if (repeating) {
-      startDate = moment.tz(`${dateStr} ${evt.repeating_start_time}`, timezone);
+      const format = 'YYYY-MM-DD HH:mm:ss A';
+      startDate = moment.tz(`${dateStr} ${evt.repeating_start_time}`, format, timezone);
       if (evt.repeating_end_time.length) {
-        endDate = moment.tz(`${dateStr} ${evt.repeating_end_time}`, timezone);
+        endDate = moment.tz(`${dateStr} ${evt.repeating_end_time}`, format, timezone);
       }
     } else {
-      startDate = moment.tz(evt.single_start_time, timezone);
-      endDate = moment.tz(evt.single_end_time, timezone);
+      const format = 'YYYY-MM-DD HH:mm';
+      startDate = moment.tz(evt.single_start_time, format, timezone);
+      endDate = moment.tz(evt.single_end_time, format, timezone);
     }
     const identifier = `${originSystem}:${evt.unique_name}:${dateStr}`;
 
