@@ -75,7 +75,7 @@ const eventToOSDI = async function (evt) {
   switch (evt.repeating_or_single) {
     case 'One-time':
       repeating = false;
-      dates = [new Date(evt.single_start_time)];
+      dates = [moment(evt.single_start_time).format('YYYY-MM-DD')];
       break;
     case 'Repeating':
       repeating = true;
@@ -103,8 +103,7 @@ const eventToOSDI = async function (evt) {
   };
   const timezone = geoAddr.timezone;
 
-  return dates.map(date => {
-    const dateStr = date.toISOString().replace(/T.*$/, '');
+  return dates.map(dateStr => {
     let startDate, endDate;
     if (repeating) {
       const format = 'YYYY-MM-DD HH:mm:ss A';
@@ -143,7 +142,7 @@ const upsertEvent = function (osdiEvent) {
   const query = { identifiers: { $in: [osdiEvent.identifiers[0]] } };
   Event.upsert(query, osdiEvent, function (err, doc) {
     if (err) { return console.error(`ERROR upserting: ${err}`); }
-    console.log(`Successfully upserted ${doc.title}`);
+    console.log(`Upserted ${doc.title} - ${doc.start_date}`);
   });
 };
 
