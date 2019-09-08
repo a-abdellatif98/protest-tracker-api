@@ -1,3 +1,4 @@
+const moment = require('moment-timezone');
 const db = require('../lib/database'); // Has side effect of connecting to database
 const geo = require('../lib/geo');
 const fetchCSV = require('../lib/fetchCSV');
@@ -87,7 +88,7 @@ const eventToOSDI = async function (evt) {
   }
 
   const fullAddrStr = `${evt.adddress}, ${evt.city}, ${evt.state}`;
-  const geoAddr = (await geo.addressToGeocodedLocation(fullAddrStr))[0];
+  const geoAddr = (await geo.addressToGeocodedLocation(fullAddrStr));
   const location = {
     venue: evt.location_name,
     address_lines: [ evt.address ],
@@ -101,22 +102,22 @@ const eventToOSDI = async function (evt) {
     },
     public: true
   };
+  const timezone = geoAddr.timezone;
 
   return dates.map(date => {
     const dateStr = date.toISOString().replace(/T.*$/, '');
     let startDate, endDate;
     if (repeating) {
-      startDate = new Date(`${dateStr} ${evt.repeating_start_time} UTC`);
+      startDate = moment.tz(`${dateStr} ${evt.repeating_start_time}`, timezone);
       if (evt.repeating_end_time.length) {
-        endDate = new Date(`${dateStr} ${evt.repeating_end_time} UTC`);
+        endDate = moment.tz(`${dateStr} ${evt.repeating_end_time}`, timezone);
       }
     } else {
-      startDate = new Date(evt.single_start_time);
-      endDate = new Date(evt.single_end_time);
+      startDate = moment.tz(evt.single_start_time, timezone);
+      endDate = moment.tz(evt.single_end_time, timezone);
     }
     const identifier = `${originSystem}:${evt.unique_name}:${dateStr}`;
 
-    // TODO: Figure out if timezones are an issue. I suspect they are not.
     return new Event({
       identifiers: [identifier],
       origin_system: originSystem,
@@ -127,11 +128,12 @@ const eventToOSDI = async function (evt) {
       browser_url: evt.event_url,
       type: 'open',
       status: 'confirmed',
-      start_date: startDate,
-      end_date: endDate,
+      start_date: startDate.utc(),
+      end_date: endDate.utc(),
       transparence: 'transparent',
       visibility: 'public',
-      location: location
+      location: location,
+      timezone: timezone
     });
   });
 };
