@@ -80,8 +80,7 @@ const eventToOSDI = async function (evt) {
     case 'Repeating':
       repeating = true;
       const daysOfWeek = evt.repeating_days_of_week.split(',').map(day => day.trim());
-      // TODO: Incorporate start and end dates
-      dates = getRepeatingDates(daysOfWeek);
+      dates = getRepeatingDates(daysOfWeek, evt.repeating_start_date, evt.repeating_end_date);
       break;
     default:
       console.error(`ERROR: Invalid value for evt.repeating_or_single ${evt.repeating_or_single}`);
