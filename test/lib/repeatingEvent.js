@@ -5,7 +5,7 @@ const RepeatingEvent = require('../../lib/repeatingEvent');
 
 lab.test('RepeatingEvent.getDates with start date', (done) => {
   const daysOfWeek = 'Tuesday';
-  const startDate = new Date('2019-09-09');
+  const startDate = new Date('2019-09-08');
   const dates = RepeatingEvent.getDates(daysOfWeek, startDate);
 
   const expected = [
