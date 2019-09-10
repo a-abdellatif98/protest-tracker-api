@@ -124,7 +124,7 @@ const eventToOSDI = async function (evt) {
       name: evt.title,
       title: evt.title,
       description: evt.description,
-      summary: evt.description,
+      summary: evt.type,
       browser_url: evt.event_url,
       type: 'open',
       status: 'confirmed',
