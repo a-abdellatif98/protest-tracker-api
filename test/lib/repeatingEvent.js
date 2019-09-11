@@ -1,11 +1,12 @@
 const Code = require('code');
 const Lab = require('lab');
+const moment = require('moment');
 const lab = exports.lab = Lab.script();
 const RepeatingEvent = require('../../lib/repeatingEvent');
 
 lab.test('RepeatingEvent.getDates with start date', (done) => {
   const daysOfWeek = 'Tuesday';
-  const startDate = new Date('2019-09-08');
+  const startDate = moment('2019-09-08');
   const dates = RepeatingEvent.getDates(daysOfWeek, startDate);
 
   const expected = [
@@ -21,8 +22,8 @@ lab.test('RepeatingEvent.getDates with start date', (done) => {
 
 lab.test('RepeatingEvent.getDates with start and end dates', (done) => {
   const daysOfWeek = 'Tuesday';
-  const startDate = new Date('2019-09-09');
-  const endDate = new Date('2019-09-26');
+  const startDate = moment('2019-09-09');
+  const endDate = moment('2019-09-26');
   const dates = RepeatingEvent.getDates(daysOfWeek, startDate, endDate);
 
   const expected = [
