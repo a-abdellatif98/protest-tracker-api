@@ -23,7 +23,7 @@ const EventSchema = new mongoose.Schema({
   instructions: { type: String },
   // Quasi-OSDI: start_date and end_date are persisted as UTC in mongo, and
   // should be converted on post init to canonical OSDI values using the
-  // location.timezone value if available, otherwise UTC may be used
+  // timezone value if available, otherwise UTC may be used
   start_date: { type: Date },
   end_date: { type: Date },
   add_day_date: { type: Date },
