@@ -8,7 +8,7 @@ const Event = require('../models/osdi/event');
 // Main function
 const importEvents = async function () {
   // This spreadsheet is fed by the "Add Event" Google Form linked on our site.
-  const csvFile = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRRk9VzF_6cp_W3zcE_HkBBa5IpiHDLJk9Xx5J1y7OQ_pR_nZMjfuSZYgN4PhlNJNCF9EN-zdjpARtg/pub?gid=393144295&single=true&output=csv';
+  const csvFile = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRRk9VzF_6cp_W3zcE_HkBBa5IpiHDLJk9Xx5J1y7OQ_pR_nZMjfuSZYgN4PhlNJNCF9EN-zdjpARtg/pub?gid=1321676757&single=true&output=csv';
 
   const columns = [
     'timestamp',
