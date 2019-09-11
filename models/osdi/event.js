@@ -31,6 +31,7 @@ const EventSchema = new mongoose.Schema({
   capacity: { type: Number },
   guests_can_invite_others: { type: Boolean },
   facebookLink: { type: String },
+  hashtags: { type: String },
   location: {
     type: {
       identifiers: [String],

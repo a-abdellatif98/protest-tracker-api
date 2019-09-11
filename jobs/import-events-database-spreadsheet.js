@@ -135,7 +135,8 @@ const eventToOSDI = async function (evt) {
       transparence: 'transparent',
       visibility: 'public',
       location: location,
-      timezone: timezone
+      timezone: timezone,
+      hashtags: evt.hashtags
     });
   });
 };
