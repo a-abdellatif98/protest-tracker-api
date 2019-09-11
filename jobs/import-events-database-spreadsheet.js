@@ -47,7 +47,7 @@ const importEvents = async function () {
   eventData = ensureUniqueNames(eventData);
   console.log(`Found ${eventData.length} events with unique names`);
 
-  const nestedOSDIEvents = await Promise.all(eventData.map(eventToOSDI));
+  const nestedOSDIEvents = await Promise.all(eventData.map(eventToOSDISafe));
   // Each "nested" event is an array of events. Flatten them.
   const osdiEvents = nestedOSDIEvents.reduce((e, a) => a.concat(e), []);
 
@@ -136,6 +136,16 @@ const eventToOSDI = async function (evt) {
       timezone: timezone
     });
   });
+};
+
+const eventToOSDISafe = async (evt) => {
+  try {
+    return await eventToOSDI(evt);
+  } catch (e) {
+    console.warn(`Could not import ${evt.title}. Error follows.`);
+    console.error(e);
+    return [];
+  }
 };
 
 const upsertEvent = function (osdiEvent) {
