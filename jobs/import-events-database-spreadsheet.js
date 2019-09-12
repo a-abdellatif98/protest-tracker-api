@@ -128,6 +128,9 @@ const eventToOSDI = async function (evt) {
       description: evt.description,
       summary: evt.type,
       browser_url: evt.event_url,
+      contact: {
+        name: evt.organization
+      },
       type: 'open',
       status: 'confirmed',
       start_date: startDate.utc(),

@@ -29,6 +29,15 @@ const EventSchema = new mongoose.Schema({
   add_day_date: { type: Date },
   add_day: { type: Boolean },
   capacity: { type: Number },
+  contact: {
+    type: {
+      name: { type: String },
+      email_address: { type: String },
+      phone_number: { type: String },
+      additional_info: { type: String },
+      public: { type: Boolean }
+    }
+  },
   guests_can_invite_others: { type: Boolean },
   facebookLink: { type: String },
   hashtags: { type: String },
@@ -58,16 +67,7 @@ const EventSchema = new mongoose.Schema({
     required: false
   },
   // Quasi-OSDI: Added in order to allow times to be formatted in localtime
-  timezone: { type: String },
-  contact: {
-    type: {
-      name: String,
-      email_address: String,
-      phone_number: String,
-      additional_info: String,
-      public: Boolean
-    }
-  }
+  timezone: { type: String }
 });
 
 const updateDates = function (next) {
