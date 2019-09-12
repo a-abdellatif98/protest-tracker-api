@@ -30,7 +30,9 @@ const get = function (opts, next) {
       'location.location',
        query
     );
-    const filter = _.merge(searchFilter, distanceFilter);
+    // Exclude cancelled events.
+    const confirmedFilter = ODATA.createFilter("status eq 'confirmed'");
+    const filter = _.merge(searchFilter, distanceFilter, confirmedFilter);
     const orderBy = ODATA.createOrderBy(query.$orderby);
     console.log(`mongo db filter = ${JSON.stringify(filter)} orderBy = ${JSON.stringify(orderBy)}`);
     Event.count(filter)

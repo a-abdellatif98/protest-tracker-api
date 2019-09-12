@@ -34,7 +34,8 @@ const importEvents = async function () {
     'hashtags',
     'twitter_username',
     'approved',
-    'unique_name'
+    'unique_name',
+    'cancelled'
   ];
 
   console.debug(`Loading ${csvFile}`);
@@ -132,7 +133,7 @@ const eventToOSDI = async function (evt) {
         name: evt.organization
       },
       type: 'open',
-      status: 'confirmed',
+      status: evt.cancelled === 'Yes' ? 'cancelled' : 'confirmed',
       start_date: startDate.utc(),
       end_date: endDate.utc(),
       transparence: 'transparent',
