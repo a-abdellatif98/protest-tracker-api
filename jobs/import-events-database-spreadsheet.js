@@ -68,7 +68,9 @@ const ensureUniqueNames = function (events) {
   });
 };
 
-const eventApproved = (evt) => evt.approved === 'Yes';
+const eventApproved = (evt) => {
+  return evt.approved === 'Yes' && evt.unique_name !== '';
+};
 
 const eventToOSDI = async function (evt) {
   const originSystem = 'pt_evt_db_ss';
